@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User App</title>
+    <title>Art-api</title>
 </head>
 <body>
-    <nav>
+    <nav class="navbar">
         <ul>
             <!-- if the user is logged in... -->
             <!-- all data in the res.locals is usuable in the layout -->
@@ -19,6 +19,9 @@
                 <li>
                     <a href="/users/logout">Logout</a>
                 </li>
+                <div class="search">
+                    <input type="text" name="search" id="search" placeholder="Search this website">
+                </div>
             <% } else { %>
                 <li>
                     <a href="/users/new">Sign Up</a>
@@ -31,8 +34,44 @@
         </ul>
     </nav>
 
-    <h1>Hello user, welcome to the User App</h1>
+    <h1>Welcome</h1>
 
     <%- body %>
 </body>
 </html>
+
+<style>
+    .navbar{
+        background-color: black;
+        border-radius: 30px;
+        
+    }
+    .navbar ul{
+        overflow: auto;
+    }
+    .navbar li{
+        float:left;
+        list-style: none; 
+        margin: 13px 20px;
+        
+    }
+    .navbar li a{
+        padding: 3px 3px;
+        text-decoration: none;
+        color: white;
+    }
+    .navbar li a:hover{
+        color: red
+    }
+    .search{
+        float: right;
+        color: white;
+        padding: 12px 75px;
+    }
+    .navbar input{
+        border: 2px solid black;
+        border-radius: 14px;
+        padding: 3px 17px;
+        width: 129px;
+    }
+</style>

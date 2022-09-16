@@ -3,7 +3,7 @@ const router = express.Router()
 const db = require('../models')
 const crypto = require('crypto-js')
 const bcrypt = require('bcrypt')
-
+ 
 
 // GET /users/new -- render a form to create a new user
 router.get('/new', (req, res) => {
