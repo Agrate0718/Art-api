@@ -17,10 +17,18 @@
                 </li>
 
                 <li>
+                    <a href = "/users/search">Search</a>
+                </li>
+
+                <li>
                     <a href="/users/logout">Logout</a>
                 </li>
+                <li>
+                    <!-- <div class="name"><%- user.email %></div> -->
+                </li>
                 <div class="search">
-                    <input type="text" name="search" id="search" placeholder="Search this website">
+                    <!-- <input type="text" name="search" id="search" placeholder="Search this website"> -->
+                    <div class="name"><%- user.email %></div>
                 </div>
             <% } else { %>
                 <li>
@@ -34,7 +42,6 @@
         </ul>
     </nav>
 
-    <h1>Welcome</h1>
 
     <%- body %>
 </body>
@@ -73,5 +80,12 @@
         border-radius: 14px;
         padding: 3px 17px;
         width: 129px;
+    }
+    body{
+        background-color: bisque;
+        text-align: center;
+    }
+    .name{
+        color: aliceblue;
     }
 </style>

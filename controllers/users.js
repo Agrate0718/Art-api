@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt')
 
 // GET /users/new -- render a form to create a new user
 router.get('/new', (req, res) => {
-    res.render('users/new.ejs')
+    res.render('users/sign-up.ejs')
 })
 
 // POST /users -- create a new user in the db

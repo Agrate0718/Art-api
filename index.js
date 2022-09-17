@@ -5,6 +5,7 @@ const ejsLayouts = require('express-ejs-layouts')
 const cookieParser = require('cookie-parser')
 const db = require('../Art-api/models')
 const crypto = require('crypto-js')
+const axios = require('axios')
 
 console.log('server secret:', process.env.ENC_SECRET)
 
@@ -43,6 +44,10 @@ app.get('/', (req, res) => {
     // console.log(res.locals.myData)
     console.log('the currently logged in user is:', res.locals.user)
     res.render('home.ejs')
+})
+
+app.get('/users/search', (req,res) => {
+    res.render('users/search.ejs')
 })
 
 // Controllers
