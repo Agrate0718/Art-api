@@ -50,6 +50,14 @@ app.get('/users/search', (req,res) => {
     res.render('users/search.ejs')
 })
 
+app.get('/results', (req, res) => {
+    axios.get(`http://www.omdbapi.com/?s=${req.query.movieSearch}&apikey=${process.env.OMDB_API_KEY}`)
+      .then(response => {
+        res.render('results.ejs', { movies: response.data.Search })
+      })
+      .catch(console.log, 'apple')
+  })
+
 // Controllers
 app.use('/users', require('../Art-api/controllers/users'))
 
