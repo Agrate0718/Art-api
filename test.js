@@ -30,7 +30,7 @@ axios.get('https://collectionapi.metmuseum.org/public/collection/v1/search?hasIm
            js.forEach(d => {
               axios.get(`https://collectionapi.metmuseum.org/public/collection/v1/objects/${d}`)
                 .then(response => {
-                    console.log(response)
+                    console.log(response.data.title)
                 })
            }) 
         })

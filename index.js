@@ -61,13 +61,14 @@ app.get('/users/search', (req,res) => {
 app.get('/results', (req, res) => {
     axios.get(`https://collectionapi.metmuseum.org/public/collection/v1/search?q=${req.query.movieSearch}`)
     .then(response => {
-        res.render('results.ejs',{ movies: response.data.objectIDs })
-        res.render('results.ejs',{Art : response.data.objectIDs})
+        Id = response.data.objectIDs
+        num = response.data.total
+        console.log(num)
         console.log(Id)
         Id.forEach(d => {
             axios.get(`https://collectionapi.metmuseum.org/public/collection/v1/objects/${d}`)
         .then(response => {
-            res.render('results.ejs',{movies: response.data.title})
+            res.render('results.ejs',{movies: response.data})
         })
         .catch(console.log)
         })
