@@ -50,13 +50,30 @@ app.get('/users/search', (req,res) => {
     res.render('users/search.ejs')
 })
 
+// app.get('/results', (req, res) => {
+//     axios.get(`http://www.omdbapi.com/?s=${req.query.movieSearch}&apikey=${process.env.OMDB_API_KEY}`)
+//       .then(response => {
+//         res.render('results.ejs', { movies: response.data.Search })
+//       })
+//       .catch(console.log, 'apple')
+//   })
+
 app.get('/results', (req, res) => {
-    axios.get(`http://www.omdbapi.com/?s=${req.query.movieSearch}&apikey=${process.env.OMDB_API_KEY}`)
-      .then(response => {
-        res.render('results.ejs', { movies: response.data.Search })
-      })
-      .catch(console.log, 'apple')
-  })
+    axios.get(`https://collectionapi.metmuseum.org/public/collection/v1/search?q=${req.query.movieSearch}`)
+    .then(response => {
+        // res.render('results.ejs',{ movies: response.data.objectIDs })
+        Id = response.data.objectIDs
+        console.log(Id)
+        Id.forEach(d => {
+            axios.get(`https://collectionapi.metmuseum.org/public/collection/v1/objects/${d}`)
+        .then(response => {
+            res.render('results.ejs',{movies: response.data.title})
+        })
+        .catch(console.log)
+        })
+        })
+        .catch(console.log)
+})
 
 // Controllers
 app.use('/users', require('../Art-api/controllers/users'))
