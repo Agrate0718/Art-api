@@ -11,7 +11,7 @@ module.exports = {
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
-  "production": {
+  production: {
     "use_env_variable": "DATABASE_URI"
   }
 }
