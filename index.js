@@ -5,11 +5,11 @@ const ejsLayouts = require('express-ejs-layouts')
 const cookieParser = require('cookie-parser')
 const db = require('../Art-api/models')
 const crypto = require('crypto-js')
-const axios = require('axios')
-
+const { default: axios } = require('axios');
+const methodOverride = require('method-override')
 
 console.log('server secret:', process.env.ENC_SECRET)
-
+console.log(db.user.password)
 // config express app/middlewares
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -17,21 +17,23 @@ app.set('view engine', 'ejs')
 app.use(ejsLayouts)
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
+app.use(require('morgan')('dev'));
+app.use(methodOverride('_method'));
 // our custom auth middleware
 app.use(async (req, res, next) => {
     // console.log('hello from a middleware 👋')
     // if there is a cookie on the incoming request
     if (req.cookies.userId) {
         // decrypt the user id before we look up the user in the db
-        const decryptedId = crypto.AES.decrypt(req.cookies.userId.toString(), process.env.ENC_SECRET)
-        const decryptedIdString = decryptedId.toString(crypto.enc.Utf8)
+        const decryptedid = crypto.AES.decrypt(req.cookies.userId.toString(), process.env.ENC_SECRET)
+        const decryptedidString = decryptedid.toString(crypto.enc.Utf8)
         // look up the user in the db
-        const user = await db.user.findByPk(decryptedIdString)
+        const user = await db.user.findByPk(decryptedidString)
         // mount the user on the res.locals
         res.locals.user = user
     // if there is no cookie -- set the user to be null in the res.locals
     } else {
-        res.locals.user = null
+         res.locals.user = null
     }
     // move on to the next route or middleware in the chain
     next()
@@ -42,7 +44,7 @@ app.use(async (req, res, next) => {
 // route definitions
 app.get('/', (req, res) => {
     // console.log('incoming cookie 🍪', req.cookies)
-    // console.log(res.locals.myData)
+    console.log(res.locals.myData)
     console.log('the currently logged in user is:', res.locals.user)
     res.render('home.ejs')
 })
@@ -73,71 +75,92 @@ app.get('/results', (req, res) => {
 app.get('/users/profile', async (req, res) => {
     try {
         const user = await db.user.findOne({
-            where: { email: res.locals.user.email }
+            where: { 
+                email: res.locals.user.email
+            }
 
          })
-            const userSaved = await user.getSaved()
+            const userSave = await user.getSaves()
             
             const allComments = await db.comment.findAll()
 
-      res.render('users/profile.ejs', { userSaved, allComments})
+      res.render('users/profile.ejs', { userSave, allComments})
     } catch(err) {
       console.log(err)
-      res.send('server error')
+      res.send('server error1')
     }
 })
 // POST /saved -- CREATE new save and redirect to /saved to display user saved
 app.post('/users/profile', async (req, res) => {
     try {
-        const save = await db.save.findOrCreate({
+        const [save, saveCreated] = await db.save.findOrCreate({
+            
             where: {
                 title: req.body.title,
-                imdbid: req.body.imdbid,
+                imdbID: req.body.imdbID,
                 poster: req.body.poster
             }
         })
         const user = await db.user.findOne({
-            where: {
-                email: res.locals.user.email
-            }
+            where: {email: res.locals.user.email}
         })
         await user.addSave(save)
         res.redirect('/users/profile')
     } catch(err) {
       console.log(err)
-      res.send('server error')
+      res.send('server error2')
     }
   })
 
   // route to delete saved movies
-app.delete('user/profile/:id', async (req,res) => {
+app.delete('/users/profile/:id', async (req,res) => {
     try {
 
         const deleteUserSaved = await db.save.destroy({
             where: { id: req.params.id }
         })
        
-        res.redirect('user/profile')
+        res.redirect('/users/profile')
+    } catch(err){
+        console.log(err)
+    }
+})
+// make comment
+app.post('/users/profile/:id', async (req,res) => {
+    try {
+        const [comment, commentCreated] = await db.comment.findOrCreate({
+        
+        where:{
+            user_name: req.body.user_name,
+            paragraph: req.body.paragraph,
+            saveId: req.params.id,
+            userId: res.locals.user.id
+        }
+            
+        })
+        res.redirect('/users/profile')
     } catch(err){
         console.log(err)
     }
 })
 
+
 // route to delete comments
-app.delete('user/profile/:id', async (req,res) => {
+app.delete('/users/profile/:id', async (req,res) => {
     try {
   
-         const getUser = await db.user.findOne({
-            where: { email: res.locals.user.email }
-        })
-        // once you set on your action <%= comment.id %> the id on your rout changes to that!
+        //  const getUser = await db.user.findOne({
+        //     where: { email: res.locals.user.email }
+        // })
+
         const deleteComment = await db.comment.destroy({
-            where: { commentId: req.params.id,
-                     userId: getUser.id}
+            // where: { commentsId: req.params.id,
+            //         userId: getUser.id }
+                    where: { id: req.params.id }
   
         })
        
-        res.redirect('user/profile')
+        res.redirect('/users/profile')
     } catch(err){
         console.log(err)
     }
@@ -149,8 +172,8 @@ app.use('/users', require('../Art-api/controllers/users'))
 
 // listen on a port
 app.listen(PORT, () => console.log(`you or your loved ones may be entitled to compensation on port: ${PORT}`))
-// Id.forEach(d => {
+// id.forEach(d => {
         //     axios.get(`https://collectionapi.metmuseum.org/public/collection/v1/objects/${d}`)
         //     .then(response => {
-        //     artwork.push(response.data.objectID)
+        //     artwork.push(response.data.objectid)
         //     res.render('results.ejs',{artworks: artwork})

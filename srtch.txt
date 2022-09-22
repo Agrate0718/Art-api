@@ -12,3 +12,4 @@ stub out routes and test api
     <img  src="<%= movie.Poster %>" alt="<%= movie.Title %>'s movie poster"/> 
   <% } %>
 <% }) %>
+ models.user.belongsToMany(models.save, { through: "user_saved"} )

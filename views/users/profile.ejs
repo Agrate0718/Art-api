@@ -1,2 +1,57 @@
+<h1>Saved Movies</h1>    
+
+
+
+<% userSave.forEach(save => { %>
+<div>
+    <div>
+            <h2><%= save.title %></h2>
+        <div class="movie-poster" >
+            <img src="<%= save.poster %>" />
+        </div>
+        <div>
+            <a href="/details/<%= save.imdbID %>">details</a>
+        </div>
+        <div>
+            <form method="POST" action="/users/profile/<%= save.id%>/?_method=DELETE">
+                <button type="submit">Delete</button>
+            </form>
+        </div>
+    </div>
+         
+    <div>
+        <div>
+                <% allComments.forEach(comment => { %>
+                    <% if (comment.saveId = save.id) { %>
+                        
+                            <h3>Comment</h3>
+                            <div>
+                                <p>User: <%= comment.user_name %> </p>
+                            </div>
+                            <div>
+                                <p>Commented: <%= comment.paragraph %> </p>
+                            </div>
+                            <div>
+                                <form method="POST" action="/users/profile/<%= comment.id%>/?_method=DELETE">
+                                    <button type="submit">Delete</button>
+                                </form>
+                            </div>
+                    <% }else{console.log('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh')} %>
+                <% }) %>
+            </div>  
+        <div>
+            <h3>Add a new comment:</h3>
+            <form method="POST" action="/users/profile/<%= save.id%>">
+                <input id="comment-username" type="text" name="user_name" placeholder="Username goes here">
+                <input id="comment-paragraph" type="text" name="paragraph" placeholder="Comment goes here">
+                <input hidden value="<%= save.id %>" type="text" name="id">
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+        
+         
+    </div>
+ </div>   
+<% }) %>  
 
 
