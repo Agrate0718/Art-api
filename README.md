@@ -35,19 +35,34 @@ ______
 _________
 
 ### homepage
-![](./img/homepage.jpg)
+![](./img/Homepage.png)
+
+
 ### login page
-![](./img/login.jpg)
+![](./img/Login.png)
+
+
 ### sign up page
-![](./img/sign-up.jpg)
+![](./img/Signup.png)
+
+
 ### search page
-![](./img/search-page.jpg)
+![](./img/Searchpage.png)
+
+
 ### results
-![](./img/results.jpg)
-### Art index page
-![](./img/art-index.jpg)
-### Saved art page
-![](./img/saved-art.jpg)
+![](./img/Results.png)
+
+
+### Movie details page
+![](./img/Details.png)
+
+
+### Profile page
+![](./img/Profile.png)
+
+### 
+
 
 ## User Stories
 ________
