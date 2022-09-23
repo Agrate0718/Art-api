@@ -1,10 +1,11 @@
-
 <% if (message) { %>
     <p><%= message %></p>
 <% } %>
 
+<div>
+<p>Login to Moviefy</p>
 
-<form action="/users/login" method="POST">
+    <form action="/users/login" method="POST">
     <label for="email">Email:</label>
     <input id="email" type="email" name="email" required>
 
@@ -13,3 +14,15 @@
     
     <button type="submit">Login</button>
 </form>
+</div>
+
+<style>
+    div{
+        display: flexbox;
+        align-items: center;
+        justify-content: center;
+        margin-top: 280px;
+        font-size: x-large;
+    }
+
+</style>

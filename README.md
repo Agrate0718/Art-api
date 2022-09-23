@@ -52,8 +52,8 @@ _________
 ## User Stories
 ________
 
-- As a user I want to view artwork
-- As a user I want to save my favorite artwork on my personal profile
+- As a user I want to view movies
+- As a user I want to save my favorite movies on my personal profile
 - As a user I want to change my username from time to time
 
 ## MVP
@@ -63,7 +63,7 @@ ________
  - Give users a personal profile
  - Allow user to change username
  - Allow user to save a list of personal movies they like
- - Allow users to comment on artwork
+ - Allow users to comment on movies
 
  ## Stretch Goals
  _______

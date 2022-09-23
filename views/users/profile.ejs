@@ -26,10 +26,10 @@
                         
                             <h3>Comment</h3>
                             <div>
-                                <p>User: <%= comment.user_name %> </p>
+                                <p class="title"><strong>User:</strong> <%= comment.user_name %> </p>
                             </div>
                             <div>
-                                <p>Commented: <%= comment.paragraph %> </p>
+                                <p class="title"><strong>Commented:</strong> <%= comment.paragraph %> </p>
                             </div>
                             <div>
                                 <form method="POST" action="/user/profile/<%= comment.id%>/?_method=DELETE">
@@ -42,8 +42,8 @@
         <div>
             <h3>Add a new comment:</h3>
             <form method="POST" action="/users/profile/<%= save.id%>">
-                <input id="comment-username" type="text" name="user_name" placeholder="Username goes here">
-                <input id="comment-paragraph" type="text" name="paragraph" placeholder="Comment goes here">
+                <input id="comment-username" type="text" name="user_name" placeholder="Username">
+                <input id="comment-paragraph" type="text" name="paragraph" placeholder="Comment">
                 <input hidden value="<%= save.id %>" type="text" name="id">
                 <button type="submit">Submit</button>
             </form>
@@ -54,5 +54,4 @@
  </div>   
 <% }) %>  
 
-<style>
-</style>
+
