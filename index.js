@@ -115,7 +115,7 @@ app.post('/users/profile', async (req, res) => {
 app.delete('/users/profile/:id', async (req,res) => {
     try {
 
-        const deleteUserSaved = await db.save.destroy({
+            await db.save.destroy({
             where: { id: req.params.id }
         })
        
@@ -129,7 +129,7 @@ app.delete('/users/profile/:id', async (req,res) => {
 // Make comment
 app.post('/users/profile/:id', async (req,res) => {
     try {
-        const [comment, commentCreated] = await db.comment.findOrCreate({
+         await db.comment.findOrCreate({
         
         where:{
             user_name: req.body.user_name,
@@ -150,7 +150,7 @@ app.post('/users/profile/:id', async (req,res) => {
 app.delete('/user/profile/:id', async (req,res) => {
     try {
 
-        const deleteUserSaved = await db.comment.destroy({
+            await db.comment.destroy({
             where: { id: req.params.id }
         })
        
@@ -166,8 +166,3 @@ app.use('/users', require('../Art-api/controllers/users'))
 
 // listen on a port
 app.listen(PORT, () => console.log(`you or your loved ones may be entitled to compensation on port: ${PORT}`))
-// id.forEach(d => {
-        //     axios.get(`https://collectionapi.metmuseum.org/public/collection/v1/objects/${d}`)
-        //     .then(response => {
-        //     artwork.push(response.data.objectid)
-        //     res.render('results.ejs',{artworks: artwork})
