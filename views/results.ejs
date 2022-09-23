@@ -1,7 +1,7 @@
 <% console.log(movies, 'apple') %>
 <% movies.forEach(movie => { %>
-  <div>
-    <h3><%= movie.Title %></h3>
+  <div class="movieResults">
+    <h2><%= movie.Title %></h2>
     <p><%= movie.Year %></p>
     <p><%= movie.Type %></p>
     <a href="/details/<%= movie.imdbID %>">more info</a>
@@ -10,3 +10,6 @@
     <img  src="<%= movie.Poster %>" alt="<%= movie.Title %>'s movie poster"/> 
   <% } %>
 <% }) %>
+
+<style>
+</style>

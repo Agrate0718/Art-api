@@ -9,7 +9,6 @@ const { default: axios } = require('axios');
 const methodOverride = require('method-override')
 
 console.log('server secret:', process.env.ENC_SECRET)
-console.log(db.user.password)
 // config express app/middlewares
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -48,19 +47,19 @@ app.get('/', (req, res) => {
     console.log('the currently logged in user is:', res.locals.user)
     res.render('home.ejs')
 })
-
+//Search page
 app.get('/users/search', (req,res) => {
     res.render('users/search.ejs')
 })
-
+//Search results page
 app.get('/results', (req, res) => {
     axios.get(`http://www.omdbapi.com/?s=${req.query.movieSearch}&apikey=${process.env.OMDB_API_KEY}`)
       .then(response => {
         res.render('results.ejs', { movies: response.data.Search })
       })
-      .catch(console.log, 'apple')
+      .catch(console.log,)
   })
-
+  //Read details of one movie
   app.get('/details/:id', (req, res) => {
     console.log(req.params.id)
     axios.get(`http://www.omdbapi.com/?i=${req.params.id}&apikey=${process.env.OMDB_API_KEY}`)
@@ -71,7 +70,7 @@ app.get('/results', (req, res) => {
       .catch(console.log)
   })
 
-  // GET /saved -- READ all saved and display them to the user
+  //Read all saved and display them 
 app.get('/users/profile', async (req, res) => {
     try {
         const user = await db.user.findOne({
@@ -90,7 +89,7 @@ app.get('/users/profile', async (req, res) => {
       res.send('server error1')
     }
 })
-// POST /saved -- CREATE new save and redirect to /saved to display user saved
+// Create new saved movie
 app.post('/users/profile', async (req, res) => {
     try {
         const [save, saveCreated] = await db.save.findOrCreate({
@@ -112,7 +111,7 @@ app.post('/users/profile', async (req, res) => {
     }
   })
 
-  // route to delete saved movies
+// Route to delete saved movies
 app.delete('/users/profile/:id', async (req,res) => {
     try {
 
@@ -125,7 +124,9 @@ app.delete('/users/profile/:id', async (req,res) => {
         console.log(err)
     }
 })
-// make comment
+
+
+// Make comment
 app.post('/users/profile/:id', async (req,res) => {
     try {
         const [comment, commentCreated] = await db.comment.findOrCreate({
@@ -145,26 +146,19 @@ app.post('/users/profile/:id', async (req,res) => {
 })
 
 
-// route to delete comments
-app.delete('/users/profile/:id', async (req,res) => {
+// Route to delete comments
+app.delete('/user/profile/:id', async (req,res) => {
     try {
-  
-        //  const getUser = await db.user.findOne({
-        //     where: { email: res.locals.user.email }
-        // })
 
-        const deleteComment = await db.comment.destroy({
-            // where: { commentsId: req.params.id,
-            //         userId: getUser.id }
-                    where: { id: req.params.id }
-  
+        const deleteUserSaved = await db.comment.destroy({
+            where: { id: req.params.id }
         })
        
         res.redirect('/users/profile')
     } catch(err){
         console.log(err)
     }
-  })
+})
 
       
 // Controllers

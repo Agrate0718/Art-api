@@ -1,26 +1,35 @@
 
-# Search Your favorite artworks and keep a list of your favorites.
+# Search Your favorite movies and keep a list of your favorites.
 
 ## Chosen Api
 ______
-Art Institute of Chicago https://api.artic.edu/api/v1/artworks (doesn't require key)
+OMDB
 
 ## ERD
 ______
-![](./img/ERD-project-2.png)
+![](./img/ERD-project2.png)
 
 
 | Method | Action | URL | Functionality |
 |--------|:------:|:---:|:--------------|
-| GET | show | /homepage | show homepage/login prompt |
-| GET | show | /userhomepage | show user saved user artwork |
-| POST | create | /sighn up | add a user |
-| Get | show | /search | search artwork|
+| GET | show | / | show homepage |
+| GET | show | /users/profile | show user saved user movies |
+| POST | create | /users/profile | create a new saved movie |
+| delete | delete | /users/profile/:id | delete saved movies |
+| POST | create | /users/profile/:id | Make a comment |
+| DELETE | delete | /users/profile/:id | Delete comments |
+| Get | show | /users/search | search movies|
 | GET | show | /results | show search results|
-| GET | detail/show | /artworks/:id | show one peice of art |
-| PUT | update | /artworks/:id | comment on artwork |
-| PUT | update | /users | update one user |
-| DELETE | delete | /artworks/:id | delete one artwork from user list |
+| GET | detail/show | /details/:id | show one movie |
+
+| Method | Action | URL | Functionality |
+|--------|:------:|:---:|:--------------|
+| GET | show | /users/new | render a form to create a new user |
+| POST | create | /users | create new user |
+| GET | show | /users/login | show a form to login user |
+| POST |   | users/login | Use data to login user | 
+| GET |   | users/logout | Log user out |
+| GET | show  | users/profile | check if user is logged in |
 
 ## Wireframes of all user views
 _________
@@ -50,14 +59,14 @@ ________
 ## MVP
 ________
 
- - Search a range of artworks
- - Give users a persoonal profile
+ - Search a range of movies they like
+ - Give users a personal profile
  - Allow user to change username
- - Allow user to save a list of personal artworks
+ - Allow user to save a list of personal movies they like
  - Allow users to comment on artwork
 
  ## Stretch Goals
  _______
  - Allow user a profile pic
- - Allow users to make an slideshw out of sved artworks
+ - Allow users to make an slideshow out of saved movies they like
  

@@ -3,7 +3,7 @@
 
 
 <% userSave.forEach(save => { %>
-<div>
+<div class = savedMovies>
     <div>
             <h2><%= save.title %></h2>
         <div class="movie-poster" >
@@ -32,7 +32,7 @@
                                 <p>Commented: <%= comment.paragraph %> </p>
                             </div>
                             <div>
-                                <form method="POST" action="/users/profile/<%= comment.id%>/?_method=DELETE">
+                                <form method="POST" action="/user/profile/<%= comment.id%>/?_method=DELETE">
                                     <button type="submit">Delete</button>
                                 </form>
                             </div>
@@ -54,4 +54,5 @@
  </div>   
 <% }) %>  
 
-
+<style>
+</style>
