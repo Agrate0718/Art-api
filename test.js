@@ -60,3 +60,21 @@ console.log('apple')
 exmple.forEach(consol => {
         console.log(consol)
 })
+
+app.put('/users/name', async (req,res)=> {
+        const user = await db.user.findOne({
+            where: {email: res.locals.user.email}
+        })
+            try {
+            const editUser = await db.user.update({
+                    username: req.body.username,
+                    
+                },{
+                    where: {id: res.locals.user.id}
+                })
+        res.redirect('/users/name')
+        }catch(err) {
+            console.log(err)
+        }
+    
+    })

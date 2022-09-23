@@ -3,7 +3,7 @@ require('dotenv').config()
 const express = require('express')
 const ejsLayouts = require('express-ejs-layouts')
 const cookieParser = require('cookie-parser')
-const db = require('../Art-api/models')
+const db = require('../project2/models')
 const crypto = require('crypto-js')
 const { default: axios } = require('axios');
 const methodOverride = require('method-override')
@@ -39,13 +39,20 @@ app.use(async (req, res, next) => {
 })
 
 
-
+const hello = () => {  
+    
+   }
 // route definitions
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
     // console.log('incoming cookie 🍪', req.cookies)
-    console.log(res.locals.myData)
+    if (req.cookies.userId) {
+         res.redirect('users/profile')
+    }else{console.log(res.locals.myData)
     console.log('the currently logged in user is:', res.locals.user)
-    res.render('home.ejs')
+    res.render('home.ejs')}
+    
+    
+   
 })
 //Search page
 app.get('/users/search', (req,res) => {
@@ -89,6 +96,33 @@ app.get('/users/profile', async (req, res) => {
       res.send('server error1')
     }
 })
+// change username page
+app.get('/users/name', async (req, res) => {
+    const user = await db.user.findOne({
+        where: {email: res.locals.user.email}
+    })
+    res.render('users/name.ejs', {user})
+})
+
+//update username route
+app.put('/users/name', async (req,res)=> {
+    const user = await db.user.findOne({
+        where: {email: res.locals.user.email}
+    })
+        try {
+        const updateUser = await db.user.update({
+                username: req.body.user_name,
+                
+            },{
+                where: {id: res.locals.user.id}
+            })
+            await user.updateUser(user)
+    res.redirect('/users/name')
+    }catch(err) {
+        console.log(err)
+    }
+
+})
 // Create new saved movie
 app.post('/users/profile', async (req, res) => {
     try {
@@ -99,12 +133,12 @@ app.post('/users/profile', async (req, res) => {
                 imdbID: req.body.imdbID,
                 poster: req.body.poster
             }
-        })
+        }) 
         const user = await db.user.findOne({
             where: {email: res.locals.user.email}
         })
+        res.redirect('/users/profile') 
         await user.addSave(save)
-        res.redirect('/users/profile')
     } catch(err) {
       console.log(err)
       res.send('server error2')
@@ -162,7 +196,7 @@ app.delete('/user/profile/:id', async (req,res) => {
 
       
 // Controllers
-app.use('/users', require('../Art-api/controllers/users'))
+app.use('/users', require('../project2/controllers/users'))
 
 // listen on a port
 app.listen(PORT, () => console.log(`you or your loved ones may be entitled to compensation on port: ${PORT}`))
