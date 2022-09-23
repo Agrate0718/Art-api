@@ -70,3 +70,42 @@ ________
  - Allow user a profile pic
  - Allow users to make an slideshow out of saved movies they like
  
+ ## Description
+ ____
+ Moviefy is a app that is used to save your favorite movies on your personal profile.
+
+ ## Installation instructions
+ ____
+ - Fork and clone repository
+ - Run `npm install` to install dependencies from the package.json
+ - Run `createdb project2` to create the database
+ - Run `sequelize db:migrate` to run migrations
+ - Finally run `nodemon` to run app on server
+
+ ## Technologies used
+ - Javascript
+ - HTML
+ - CSS
+ - Node.js
+ - Method-Override
+ - EJS
+ - Express-EJS-Layouts
+ - Dotenv
+ - Crypto-JS
+ - Cookie-Parser
+ - Bycrypt
+ - Express
+ - Sequelize
+ - Postgresql
+ - Axios
+
+## Approach Taken
+____
+It honestly was kind of a mess making this one it was just repeated trial and error
+
+## Post Project reflections 
+____
+I definitely need to reach out for help more a different more informed perspective speeds things along. I feel like I have learned a lot with this project Im happy to finally be able to say that I have made a fullstack app. I also learned that while it was a struggle I enjoy backend quite a bit the problem solving of it is nice. Moving forward I definitely plan to be more vocal and to try and just dive in to my future projects a lot quicker.
+
+## Deploy link
+____
