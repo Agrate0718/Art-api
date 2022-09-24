@@ -1,8 +1,8 @@
 <h1>change username: <%=user.user_name%></h1>
 
-<form method="PUT" action="/users/name">
+<form method="POST" action="/users/name/?_method=PUT">
     <lable for="user_name"></lable>
-    <input type="text"  id="user_name" name="user_name" placeholder="New Name Here" />
+    <input type="text"  id="user_name" name="username"  placeholder="New Name Here" >
   
-    <input type="submit" />
+    <input type="submit" >
   </form>

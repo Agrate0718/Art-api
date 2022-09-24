@@ -102,21 +102,19 @@ app.get('/users/name', async (req, res) => {
         where: {email: res.locals.user.email}
     })
     res.render('users/name.ejs', {user})
+    console.log('render log')
 })
 
 //update username route
 app.put('/users/name', async (req,res)=> {
-    const user = await db.user.findOne({
-        where: {email: res.locals.user.email}
-    })
+   
         try {
-        const updateUser = await db.user.update({
-                username: req.body.user_name,
+            await db.user.update({
+            user_name: req.body.username,
                 
             },{
                 where: {id: res.locals.user.id}
             })
-            await user.updateUser(user)
     res.redirect('/users/name')
     }catch(err) {
         console.log(err)
@@ -125,9 +123,10 @@ app.put('/users/name', async (req,res)=> {
 })
 // Create new saved movie
 app.post('/users/profile', async (req, res) => {
+     
     try {
         const [save, saveCreated] = await db.save.findOrCreate({
-            
+           
             where: {
                 title: req.body.title,
                 imdbID: req.body.imdbID,
@@ -137,6 +136,7 @@ app.post('/users/profile', async (req, res) => {
         const user = await db.user.findOne({
             where: {email: res.locals.user.email}
         })
+        
         res.redirect('/users/profile') 
         await user.addSave(save)
     } catch(err) {
