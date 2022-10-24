@@ -108,7 +108,7 @@ ________
  - Dotenv
  - Crypto-JS
  - Cookie-Parser
- - Bycrypt
+ - Bcrypt
  - Express
  - Sequelize
  - Postgresql
